@@ -25,13 +25,13 @@
           <th>Label</th>
           <th>Style</th>
           <th>Genre</th>
-
           <th>Gender</th>
           <th>Country</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="artist in artists" :key="artist.idArtist">
+        <tr v-for="artist in artists" :key="artist.idArtist" @click="goToAlbumList(artist.idArtist ?? '')"
+          class="cursor-pointer hover:bg-gray-100/50">
           <td>
             <div class="flex justify-center">
               <img class="w-[50px] h-auto" :src="artist.strArtistThumb" alt="Artist Thumbnail"
@@ -42,7 +42,6 @@
           <td>{{ artist.strLabel }}</td>
           <td>{{ artist.strStyle }}</td>
           <td>{{ artist.strGenre }}</td>
-
           <td>{{ artist.strGender }}</td>
           <td>{{ artist.strCountry }}</td>
         </tr>
@@ -54,14 +53,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useArtistStore } from '@/stores';
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const artistStore = useArtistStore();
 const artistName = ref('');
 const showTooltip = ref(false);
-const searchArtist = () => {
+const searchArtist = async () => {
   if (artistName.value.trim()) {
-
-    artistStore.fetchArtists(artistName.value.trim());
+    await artistStore.fetchArtists(artistName.value.trim());
   }
 };
 
@@ -69,14 +68,13 @@ const cleanArtist = () => {
   artistStore.clear();
 }
 
+const goToAlbumList = (artistId: string) => {
+  if (artistId === '') {
+    return
+  }
+  router.push(`/albumlist/${artistId}`);
+};
+
 const isLoading = computed(() => artistStore.isLoading);
 const artists = computed(() => artistStore.artists);
 </script>
-
-<style scoped>
-th,
-td {
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-</style>
