@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axiosInstance from "@/api/axiosConfig";
 
 export type ArtistState = {
   isLoading: boolean;
@@ -17,11 +17,10 @@ export const useArtistStore = defineStore({
     async fetchArtists(artistName: string) {
       this.isLoading = true;
       try {
-        const response = await axios.get(
-          `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artistName}`
-        );
+        const response = await axiosInstance.get(`/search.php?s=${artistName}`);
         this.artists = response.data.artists;
       } catch (error) {
+        console.log(error);
       } finally {
         this.isLoading = false;
       }

@@ -14,7 +14,8 @@
       <button class="border border-gray-700" @click="cleanArtist">Clean</button>
     </div>
 
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" v-if="isLoading">Loading...
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" v-if="isLoading">
+      Loading...
     </div>
 
     <table class="w-full border-collapse" v-if="!isLoading && artists.length > 0">
@@ -54,10 +55,13 @@
 import { ref, computed } from 'vue';
 import { useArtistStore } from '@/stores';
 import { useRouter } from 'vue-router';
+
 const router = useRouter();
 const artistStore = useArtistStore();
+
 const artistName = ref('');
 const showTooltip = ref(false);
+
 const searchArtist = async () => {
   if (artistName.value.trim()) {
     await artistStore.fetchArtists(artistName.value.trim());

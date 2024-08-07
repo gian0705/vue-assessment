@@ -6,7 +6,8 @@
                 Back
             </button>
         </div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" v-if="isLoading">Loading...
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" v-if="isLoading">
+            Loading...
         </div>
         <table class="w-full border-collapse" v-if="!isLoading && albums.length > 0">
             <thead>
@@ -45,6 +46,7 @@ import { computed, onMounted } from 'vue';
 import { useAlbumStore, useArtistStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 import 'font-awesome/css/font-awesome.css';
+
 const route = useRoute();
 const router = useRouter();
 const albumStore = useAlbumStore();
@@ -60,7 +62,7 @@ const albums = computed(() => albumStore.albums);
 onMounted(() => {
     const artistId = route.params.artistId as string
 
-    const artist = artistStore.artists.find(artist => artist.idArtist && artist.idArtist === artistId)
+    const artist = artistStore.artists.find(artist => artist.idArtist === artistId)
     if (artist) {
         fetchAlbums((artist.strArtist ?? '').toLowerCase())
     }
