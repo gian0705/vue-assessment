@@ -1,7 +1,8 @@
 # vue-assessment
 
 This project is built using modern web development technologies to create a robust and efficient web application.
-
+## Live
+https://vue-assessment-git.vercel.app/
 ## Technologies Used
 
 - **Vue 3**: The progressive JavaScript framework for building user interfaces.
